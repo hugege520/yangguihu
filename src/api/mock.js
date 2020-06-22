@@ -3,14 +3,14 @@ import qs from 'qs'
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 // 1. 生成Axios的伪实例, 能够使用Axios实例的属性，但不是Axios的实例
-const instance = axios.create({
+const server = axios.create({
     // baseURL: '/api', // H5
-    baseUrl: 'api',
+    baseUrl: 'mock',
     timeout: 10000, // 设置超时时间
 })
 
 // 2. 添加请求拦截器：1. 批量修改请求参数， 2. 批量添加请求参数
-instance.interceptors.request.use(config => {
+server.interceptors.request.use(config => {
     NProgress.start() 
     // post请求参数默认为json对象形式： {a:xxx,b:yyy}, 但当前服务器识别urlcoding形式： a=xxx&b=yyy
     if (config.method.toUpperCase() === 'POST' && (config.data instanceof Object)) {
@@ -21,7 +21,7 @@ instance.interceptors.request.use(config => {
 
 // 3. 设置响应拦截器
 
-instance.interceptors.response.use(
+server.interceptors.response.use(
     response =>{
         NProgress.done()
         return response.data;
@@ -34,4 +34,4 @@ instance.interceptors.response.use(
 )
 
 
-export default instance
+export default server

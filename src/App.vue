@@ -3,24 +3,20 @@
     <div class="Wrap">
       <router-view></router-view>
     </div>
-    <NaviGation v-if="!$route.meta.isHideFooter" />
+    <NaviGation v-show="!$route.meta.isHideFooter"/>
   </div>
 </template>
 
 <script>
 import NaviGation from "./components/NaviGation/index";
 import instance from './api/ajax'
-import asios from 'axios'
+import server from './api/mock'
 export default {
   name: "App",
   components: {
     NaviGation
   },
-  mounted(){
-    instance.get('api/getindexCateList')
-    .then((reponse)=>{
-      console.log(reponse)
-    })
+  mounted(){ 
     
   },
 };
@@ -34,7 +30,6 @@ export default {
   .Wrap {
     height: 90%;
     width: 750px;
-    overflow: hidden;
   }
 }
 </style>

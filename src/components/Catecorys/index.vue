@@ -1,30 +1,16 @@
 <template>
   <div class="navFoolt">
-    <img src="../../assets/timg (1).jpg" alt srcset />
-    <div class="fooltItem" ref="fooltItem">
-      <div class="cartFoolt">
-        <div class="foolt">
-          <img src="../../assets/timg.jpg" />
-          <p>ss</p>
-        </div>
-        <div class="foolt">
-          <img src="../../assets/timg.jpg" />
-          <p>ss</p>
-        </div>
-        <div class="foolt">
-          <img src="../../assets/timg.jpg" />
-          <p>ss</p>
-        </div>
-        <div class="foolt">
-          <img src="../../assets/timg.jpg" />
-          <p>ss</p>
-        </div>
-        <div class="foolt">
-          <img src="../../assets/timg.jpg" />
-          <p>ss</p>
-        </div>
-        <div class="foolt more">
-          <div class="scrollImg more">查看更多></div>
+    <div v-for="(item,index) in home.categoryModule" :key="index">
+      <img :src="item.titlePicUrl" />
+      <div class="fooltItem" ref="fooltItem">
+        <div class="cartFoolt">
+          <div class="foolt" v-for="(p,index) in item.itemList" :key="index">
+            <img :src="p.listPicUrl" />
+            <p>{{p.simpleDesc}}</p>
+          </div>
+          <div class="foolt more">
+            <div class="scrollImg more">查看更多></div>
+          </div>
         </div>
       </div>
     </div>
@@ -33,17 +19,33 @@
 
 <script>
 import BScroll from "better-scroll";
+import { mapState } from "vuex";
 export default {
   name: "v-cateorys",
   data() {
     return {};
   },
+  computed: {
+    ...mapState({
+      home: state => state.Home.homeList
+    })
+  },
   mounted() {
-    this.fooltScroll = new BScroll(this.$refs.fooltItem, {
-      click: true,
-      scrollX: true,
-      scrollY: false
-    });
+    
+      console.log(this.$refs.fooltItem);
+ 
+  },
+  watch: {
+    home:{
+      handler(q,b){
+      //   new BScroll(this.$refs.fooltItem, {
+      //   click: true,
+      //   scrollX: true,
+      //   scrollY: false
+      // });
+      console.log(this.$refs.fooltItem);
+      }  
+    }
   }
 };
 </script>
